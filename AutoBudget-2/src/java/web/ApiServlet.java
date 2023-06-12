@@ -105,7 +105,7 @@ public class ApiServlet extends HttpServlet {
 
      
    
-    private void processPeca(JSONObject file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+     private void processPeca(JSONObject file, HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 

@@ -33,7 +33,8 @@ public class AppListener implements ServletContextListener {
             Statement s = c.createStatement();
             initializeLog += new Date() + ": Initializing database creation; ";
         
-            //s.execute("DELETE FROM users");
+          //  s.execute("DROP TABLE Pecas;");
+          //  initializeLog += new Date() + ":pecas gone ";
             initializeLog += new Date() + ": Initializing database creation; ";
             
             //USERS
@@ -47,6 +48,7 @@ public class AppListener implements ServletContextListener {
                 User.insertUser("admin", "Administrador", "ADMIN", "1234");
                 initializeLog += "Admin added; ";
                 User.insertUser("Vendedor", "Vendedor1", "Vendedor", "1234");
+                 User.insertUser("Vendedor", "Vendedor2", "Vendedor", "1234");
                 initializeLog += "Vendedor added; ";
             }
             
@@ -63,14 +65,7 @@ public class AppListener implements ServletContextListener {
             initializeLog += "Creating ModeloCarro table...";
             s.execute(ModeloCarro.getCreateStatement());
             initializeLog += "done; ";
-            if (Pecas.getPecas().isEmpty()) 
-            {
-                initializeLog += "Adding default Pecas...";
-                Pecas.insertPecas("Peca 1", 10.0, 1);
-                Pecas.insertPecas("Peca 2", 20.0, 2);
-                Pecas.insertPecas("Peca 3", 30.0, 3);
-                initializeLog += "Pecas added; ";
-            }
+            
 
             if (ModeloCarro.getModeloCarros().isEmpty()) 
             {
@@ -79,6 +74,17 @@ public class AppListener implements ServletContextListener {
                 ModeloCarro.insertModeloCarro("ModeloCarro 2", new Date(), "Marca 2");
                 ModeloCarro.insertModeloCarro("ModeloCarro 3", new Date(), "Marca 3");
                 initializeLog += "ModeloCarros added; ";
+            }
+            if (Pecas.getPecas().isEmpty()) 
+            {
+                initializeLog += "Adding default Pecas...";
+                Pecas.insertPecas("Peca 1", 10.0, 1);
+                Pecas.insertPecas("Peca 2", 20.0, 2);
+                Pecas.insertPecas("Peca 3", 30.0, 3);
+                Pecas.insertPecas("Peca 4", 30.0, 3);
+                initializeLog += "kek; ";
+                System.out.println("inseriu AEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                System.out.println("Initialization completed.");
             }
 
             initializeLog += "Fetching recently inserted data from Pecas table...\n";

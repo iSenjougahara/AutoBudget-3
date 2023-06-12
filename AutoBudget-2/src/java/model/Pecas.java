@@ -1,5 +1,6 @@
 package model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,13 +14,16 @@ import web.AppListener;
  */
 public class Pecas {
 
-    @Id
-    private long rowId;
-    private String nomePeca;
-    private double preco;
-    @ManyToOne
-    @JoinColumn(name = "rowId", referencedColumnName = "rowId")
-    private ModeloCarro modeloCarro;
+  @Id
+private long rowId;
+
+private String nomePeca;
+private double preco;
+@Column(name = "modeloCarro_rowId")
+private long modeloCarroRowId;
+
+// Getters and setters
+
 
     public static String getCreateStatement() {
         return "CREATE TABLE IF NOT EXISTS Pecas("
@@ -40,8 +44,8 @@ public class Pecas {
             long rowId = rs.getLong("rowid");
             String nomePeca = rs.getString("nomePeca");
             double preco = rs.getDouble("preco");
-            ModeloCarro modeloCarro = getModeloCarro(rowId, con);
-            list.add(new Pecas(rowId, nomePeca, preco, modeloCarro));
+            long modeloCarro_rowId = rs.getLong("modeloCarro_rowId");
+            list.add(new Pecas(rowId, nomePeca, preco, modeloCarro_rowId));
         }
         rs.close();
         stmt.close();
@@ -62,8 +66,8 @@ public class Pecas {
             String nomePeca = rs.getString("nomePeca");
             double preco = rs.getDouble("preco");
             long modeloCarroRowId = rs.getLong("modeloCarro_rowId");
-            ModeloCarro modeloCarro = getModeloCarro(modeloCarroRowId, con);
-            pecas = new Pecas(rowId, nomePeca, preco, modeloCarro);
+         
+            pecas = new Pecas(rowId, nomePeca, preco, modeloCarroRowId);
         }
         rs.close();
         stmt.close();
@@ -125,11 +129,11 @@ public class Pecas {
     con.close();
 }
 
-    public Pecas(long rowId, String nomePeca, double preco, ModeloCarro modeloCarro) {
+    public Pecas(long rowId, String nomePeca, double preco, long modeloCarro) {
         this.rowId = rowId;
         this.nomePeca = nomePeca;
         this.preco = preco;
-        this.modeloCarro = modeloCarro;
+        this.modeloCarroRowId = modeloCarro;
 
     }
 
@@ -157,8 +161,13 @@ public class Pecas {
         this.preco = preco;
     }
 
-    public void setModeloCarro(ModeloCarro modeloCarro) {
-        this.modeloCarro = modeloCarro;
+
+    public long getModeloCarroRowId() {
+        return modeloCarroRowId;
+    }
+
+    public void setModeloCarroRowId(long modeloCarroRowId) {
+        this.modeloCarroRowId = modeloCarroRowId;
     }
 
 }
